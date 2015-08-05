@@ -11,9 +11,6 @@ class Player
     self.total_rounds = 1
   end
 
-  def change_score
-
-  end
   def greeting
     puts 'What is your player name? '
     self.player_name = gets.chomp
@@ -72,24 +69,80 @@ end
 
 class Game
 
-  def initailize
-
-  end
-
-  def create_players
-
-  end
-
-  def add_player
-    puts 'What would you like to be called?'
-    player_name = gets.chomp
-
+  def add_players
+#    number_of players = 0
+#    while add_another_player == yes do
+#      puts 'what is the players name?'
+#      player_name = gets.to_s.chomp
+#      player_name = Player(player_name).new
+#      number_of_players += 1
+#      puts 'Would you like to add another player?'
+#      add_another_player = gets.to_s.chomp
+#    end
+    puts 'add player'
   end
 end
 
+----------------------------------------------------------------------------
+class Dice
+  def roll
+    rand(6) + 1
+  end
+end
 
-player1 = Player.new
+class Player1
+  attr_reader :name
+  attr_accessor :score
 
-player1.greeting
-player1.play
-player1.ending
+  def initialize(name)
+    self.score = {}
+    create_score(total_score, 0)
+    create_score(roll_score, 0)
+    create_score(turn_counter, 0)
+  end
+
+  def create_score(title, value)
+    self.score.push((title: title, value: value))
+  end
+
+  def change_score(title, value)
+    self.score["#{title}"] = value
+  end
+end
+class SetUp
+class Game
+  attr_accessor :number_of_players, :number_of_rounds
+
+  def initialize
+    self.number_of_players = 0
+    self.number_of_players = number("players are there")
+    self.number_of_rounds = 0
+    self.number_of_rounds = number("rounds will be played")
+    create_players 
+  end
+
+  def number(statement)
+    puts "how many #{statement}?"
+    gets.to_i.chomp
+  end
+
+  def create_players
+    i = 0
+    until i == number_of_players do
+      create_player(i + 1)
+      i += 1
+    end
+  end
+
+  def create_player(number)
+    puts "What is new players name?"
+    new_player = gets.to_s.chomp
+    player(number) = Player1.new(new_player)
+    puts "Ok, #{new_player} is set up!"
+  end
+
+end
+
+
+player1 = Player1.new(tom)
+player1.to_s
