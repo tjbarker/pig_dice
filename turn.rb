@@ -1,8 +1,3 @@
-require_relative 'dice' # This will load in the dice for us to use.
-require_relative 'player' # Let's do the same, but the class should be called Player, not Player1
-require_relative 'game' # And game.
-require_relative 'turn' # And turn.
-
 class Turn
   def throw
     throw_1 = Dice.new.roll
@@ -29,5 +24,3 @@ class Turn
     end
   end
 end
-
-game = Game.new
