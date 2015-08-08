@@ -1,33 +1,48 @@
 class Game
-  attr_accessor :number_of_players, :number_of_rounds
+  attr_accessor :players, :dice, :current_turn, :rule_set, :current_turn_score, :current_player
 
-  def initialize
-    self.number_of_players = 0
-    self.number_of_players = number("players are there")
-    self.number_of_rounds = 0
-    self.number_of_rounds = number("rounds will be played")
-    puts "#{number_of_players}"
-    puts "#{number_of_rounds}"
+  def initialize(**opts)
+    self.players = opts[:players]
+    self.dice = opts[:dice]
+    self.current_turn = 1
+    self.rule_set = opts[:rule_set]
+    self.current_turn_score = 0
+
   end
 
-  def number(statement)
-    puts "how many #{statement}?"
-    gets.to_i.chomp
+  def score_declaration
+    puts "Your roll was #{rule_set.success_roll}"
+    puts "Your turn score is #{current_turn_score}"
+    puts "Your total score is #{current_player.total_score}"
   end
 
-  def create_players
-    i = 0
-    until i == number_of_players do
-      create_player(i + 1)
-      i += 1
+  def next_turn
+    current_player = players[(players.size + current_turn) % players.size]
+    turn_is_active = true
+    current_turn_score = 0
+    while turn_is_active
+      results = current_player.have_turn(dice)
+      rule_set.test_roll(results)
+      if rule_set.terminal_roll?
+        puts 'Terminal Roll'
+        score_declaration
+        current_player.score = 0
+        turn_is_active = false
+      elsif rule_set.busted_roll?
+        puts 'Busted Roll'
+        score_declaration
+        turn_is_active = false
+      else
+        current_turn_score += rule_set.success_roll
+        byebug
+        score_declaration
+        puts 'Do you wish to roll again? (Y or N)'
+        if gets.chomp == 'N'
+          current_player.score += current_turn_score
+          turn_is_active = false
+        end
+      end
     end
+    self.current_turn += 1
   end
-
-  def create_player(number)
-    puts "What is player #{number}'s name?"
-    new_player = gets.to_s.chomp
-    player(number) = Player1.new(new_player)
-    puts "Ok, #{new_player} is set up!"
-  end
-
 end

@@ -1,33 +1,12 @@
-require_relative 'dice' # This will load in the dice for us to use.
-require_relative 'player' # Let's do the same, but the class should be called Player, not Player1
-require_relative 'game' # And game.
-require_relative 'turn' # And turn.
+require_relative 'dice'
+require_relative 'player'
+require_relative 'game'
+require_relative 'default_rule_set'
+require 'byebug'
 
-class Turn
-  def throw
-    throw_1 = Dice.new.roll
-    throw_2 = Dice.new.roll
-    total_throw = throw_1 + throw_2
-    (throw_1, throw_2, total_throw)
-  end
+player_1 = Player.new(1)
+player_2 = Player.new(2)
+dice = Dice.new
 
-  def option(throw_1, throw_2, total_throw)
-    if ((throw_1 == 1) && (throw_2 == 1))
-      puts 'That was a terminal role, your total score is now 0.'
-
-      end_turn
-    elsif ((throw_1 == 1) || (throw_2 == 1))
-      'bust throw'
-    else
-      total_throw
-    end
-  end
-
-  def response(option)
-    if option == 0
-      true
-    end
-  end
-end
-
-game = Game.new
+game = Game.new(players: [player_1, player_2], dice: dice, rule_set: DefaultRuleSet.new)
+game.next_turn
