@@ -17,7 +17,7 @@ class Game
   end
 
   def next_turn
-    current_player = players[(players.size + current_turn) % players.size]
+    self.current_player = players[(players.size + current_turn) % players.size]
     turn_is_active = true
     current_turn_score = 0
     while turn_is_active
@@ -34,7 +34,6 @@ class Game
         turn_is_active = false
       else
         current_turn_score += rule_set.success_roll
-        byebug
         score_declaration
         puts 'Do you wish to roll again? (Y or N)'
         if gets.chomp == 'N'
