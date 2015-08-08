@@ -3,17 +3,13 @@ class Player
 
   def initialize(number)
     puts "Player #{number}, what is your name?"
-    name = "Tom"
+    self.name = gets.chomp.capitolize
     self.total_score = 0
     puts "Ok, #{name}'s account is set up.'"
   end
 
   def score(turn_score)
     self.total_score += turn_score
-  end
-
-  def total_score
-    total_score
   end
 
   def have_turn(dice)

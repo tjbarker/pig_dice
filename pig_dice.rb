@@ -2,11 +2,24 @@ require_relative 'dice'
 require_relative 'player'
 require_relative 'game'
 require_relative 'default_rule_set'
-require 'byebug'
 
-player_1 = Player.new(1)
-player_2 = Player.new(2)
+setup = Setup.new
+
+number_of_players = setup.number_of_players
+total_score_required = setup.total_score_required
+
+i = 0
+players = []
+until i == number of players do
+  i += 1
+  player = Player.new(i)
+  players << player
+end
+
 dice = Dice.new
 
-game = Game.new(players: [player_1, player_2], dice: dice, rule_set: DefaultRuleSet.new)
-game.next_turn
+game = Game.new(players: players, dice: dice, rule_set: DefaultRuleSet.new)
+
+while game.next_turn < do
+  game.next_turn
+end
