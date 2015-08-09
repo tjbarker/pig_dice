@@ -3,7 +3,7 @@ class Player
 
   def initialize(number)
     puts "Player #{number}, what is your name?"
-    self.name = gets.chomp.capitolize
+    self.name = gets.chomp.capitalize
     self.total_score = 0
     puts "Ok, #{name}'s account is set up.'"
   end

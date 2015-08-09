@@ -9,17 +9,12 @@ class Game
     self.current_turn_score = 0
   end
 
-  def score_declaration
-    puts "Your roll was #{rule_set.success_roll}"
-    puts "Your turn score is #{current_turn_score}"
-    puts "Your total score is #{current_player.total_score}"
-  end
-
   def next_turn
     turn_setup
     while turn_is_active
       results = current_player.have_turn(dice)
       rule_set.test_roll(results)
+      puts "\n"
       if rule_set.terminal_roll?
         terminal_roll
       elsif rule_set.busted_roll?
@@ -29,21 +24,22 @@ class Game
       end
     end
     self.current_turn += 1
-    current.player.total_score
+    current_player.total_score
   end
 
   private
 
   def turn_setup
-    current_player = players[(players.size + current_turn) % players.size]
+    self.current_player = players[(players.size + current_turn + 1) % players.size]
     self.turn_is_active = true
     current_turn_score = 0
+    puts "#{current_player.name}'s turn"
   end
 
   def terminal_roll
     puts 'Terminal Roll'
     score_declaration
-    current_player.score = 0
+    self.current_player.score = 0
     self.turn_is_active = false
 
   end
@@ -55,15 +51,19 @@ class Game
   end
 
   def legit_roll
-    current_turn_score += rule_set.success_roll
-    byebug
+    self.current_turn_score += rule_set.success_roll
     score_declaration
     puts 'Do you wish to roll again? (Y or N)'
     if gets.chomp == 'N'
-      current_player.score += current_turn_score
+      self.current_player.score += current_turn_score
       self.turn_is_active = false
     end
   end
 
+  def score_declaration
+    puts "\nYour roll was #{rule_set.success_roll}"
+    puts "Your turn score is #{current_turn_score}"
+    puts "Your total score is #{current_player.total_score}"
+  end
 
 end
