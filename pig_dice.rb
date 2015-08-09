@@ -25,4 +25,5 @@ game = Game.new(players: players, dice: dice, rule_set: DefaultRuleSet.new)
 
 while game.next_turn < total_score_required do
   game.next_turn
+
 end
