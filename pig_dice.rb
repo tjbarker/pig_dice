@@ -23,7 +23,8 @@ dice = Dice.new
 
 game = Game.new(players: players, dice: dice, rule_set: DefaultRuleSet.new)
 
-while game.next_turn < total_score_required do
+while (game.current_player.nil? ? 0 : game.current_player.total_score) < total_score_required do
   game.next_turn
-
 end
+
+puts "Congratulation #{game.previous_player.name}, you've won the game."

@@ -27,6 +27,10 @@ class Game
     current_player.total_score
   end
 
+  def previous_player
+    players[(players.size + current_turn) % players.size]
+  end
+  
   private
 
   def turn_setup
@@ -41,7 +45,6 @@ class Game
     score_declaration
     self.current_player.score = 0
     self.turn_is_active = false
-
   end
 
   def busted_roll
@@ -54,8 +57,8 @@ class Game
     self.current_turn_score += rule_set.success_roll
     score_declaration
     puts 'Do you wish to roll again? (Y or N)'
-    if gets.chomp == 'N'
-      self.current_player.score += current_turn_score
+    if gets.chomp.upcase == 'N'
+      self.current_player.total_score += current_turn_score
       self.turn_is_active = false
     end
   end
