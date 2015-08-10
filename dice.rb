@@ -1,4 +1,10 @@
 class Dice
+  attr_accessor :decorator
+
+  def initialize(**opts)
+    self.decorator = opts.fetch(:decorator)
+  end
+
   def roll
     response = nil
     until response == 'r' do
@@ -6,7 +12,7 @@ class Dice
       response = gets.chomp.downcase
     end
     roll = rand(6) + 1
-    puts "you rolled: #{roll}"
+    decorator.roll(roll)
     roll
   end
 end

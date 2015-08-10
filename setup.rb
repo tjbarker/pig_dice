@@ -6,6 +6,8 @@ class Setup
 
   def total_score_required
     puts "What score would you like to play to?"
-    gets.chomp.to_i
+    score = gets.chomp.to_i
+    fail(StandardError, 'Invalid required score') unless (score > 0)
+    score
   end
 end
